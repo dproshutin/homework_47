@@ -1,4 +1,6 @@
 $(function() {
+    var pokeUrl = "https://pokeapi.co/api/v2/pokemon/";
+
     var getPokeCollectionInfo = function(url) {
         return fetch(url)
             .then(function(response) {
@@ -7,7 +9,9 @@ $(function() {
                 return obj.results.map(serializePokeInfo)
             }).then(function(arr) {
                 return arr;
-            })
+            }) .catch(function (err) {
+                console.log(err);
+            });
     };
 
     var getBaseUrl = function(baseUrl) {
@@ -18,7 +22,6 @@ $(function() {
 
     function serializePokeInfo(obj) {
         var first_part = obj.url.slice(pokeUrl.length).replace('/', '');
-        console.log(obj.name);
         var second_part = capitalizeFirstLetterOfString(obj.name);
         var elem = [];
         elem.push(first_part);
@@ -33,11 +36,11 @@ $(function() {
     function createOrderedListFromArray(arr) {
         var list = "";
         for (var i = 0; i < arr.length; i++) {
-            list += '<li id="' + arr[i][0] + '"><span>' + arr[i][0] + '. </span><span>' + arr[i][1] + '</span></li>';
+            list += '<li id="' + arr[i][0] + '"><span>' + arr[i][0] + '. ' + arr[i][1] + '</span></li>';
         }
         return '<ul style="list-style: none;">' + list + '</ul>';
     }
-    var pokeUrl = "https://pokeapi.co/api/v2/pokemon/";
+
     var makeRequest = getBaseUrl(pokeUrl);
 
     getPokeCollectionInfo(pokeUrl)
@@ -58,7 +61,9 @@ $(function() {
                 return response.json();
             }).then(function(obj) {
                 return obj;
-            })
+            }).catch(function (err) {
+                console.log(err);
+            });
     };
 
     var createDivAboutPoke = function(obj) {
@@ -94,5 +99,6 @@ $(function() {
         });
     });
 });
+
 
 
