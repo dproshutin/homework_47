@@ -16,8 +16,6 @@ $(function() {
         };
     };
 
-    var makeRequest = getBaseUrl("https://pokeapi.co/api/v2/pokemon/");
-
     function serializePokeInfo(obj) {
         var first_part = obj.url.slice(pokeUrl.length).replace('/', '');
         console.log(obj.name);
@@ -40,11 +38,10 @@ $(function() {
         return '<ul style="list-style: none;">' + list + '</ul>';
     }
     var pokeUrl = "https://pokeapi.co/api/v2/pokemon/";
-    var arrayWithPokeInfo = [];
+    var makeRequest = getBaseUrl(pokeUrl);
+
     getPokeCollectionInfo(pokeUrl)
         .then(function(result) {
-            return result;
-        }).then(function(result) {
             return createOrderedListFromArray(result);
         }).then(function(result) {
             $('#left').append(result);
